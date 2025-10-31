@@ -5,12 +5,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SmartHomeSimulation.Tests;
 
 [TestClass]
-[TestSubject(typeof(Zimmer))]
-public class ZimmerTest
+[TestSubject(typeof(ZimmerMitMarkisensteuerung))]
+public class ZimmerMitMarkisensteuerungTest
 {
 
     [TestMethod]
-    public void TestVerarbeiteWetterdaten()
+    public void METHOD()
     {
         
     }
