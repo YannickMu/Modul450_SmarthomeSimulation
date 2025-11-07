@@ -38,7 +38,7 @@ public class ZimmerMitHeizungsventilTest
     }
 
     [TestMethod]
-    public void TestVerarbeitetWetterdaten()
+    public void TestVerarbeitetWetterdaten_TemperaturvorgabeGrösserIstTemperatur_OeffneHeizventil()
     {
         Wetterdaten wetterdaten = new Wetterdaten();
         wetterdaten.Aussentemperatur = 23;
@@ -50,18 +50,35 @@ public class ZimmerMitHeizungsventilTest
         testObj.PersonenImZimmer = true;
         
         StringWriter stringWriter = new StringWriter();
-        StringWriter stringWriterClose = new StringWriter();
         Console.SetOut(stringWriter);
         
         testObj.VerarbeiteWetterdaten(wetterdaten);
         
         Assert.AreEqual($"{testObj.Name}: Heizungsventil wird geöffnet.\nWetterdaten für {testObj.Name} verarbeitet: Temperaturvorgabe: {testObj.Temperaturvorgabe}°C, Personen im Zimmer: {(testObj.PersonenImZimmer ? "ja" : "nein")}.\n", stringWriter.ToString());
+    }
+    
+    [TestMethod]
+    public void TestVerarbeitWetterdaten_TemperaturvorgabeKleinerIstTempeatur_SchliesseHeizventil()
+    {
+        Wetterdaten wetterdaten = new Wetterdaten();
+        wetterdaten.Aussentemperatur = 23;
+        wetterdaten.Regen = false;
+        wetterdaten.Windgeschwindigkeit = 30;
+        
+        ZimmerMitHeizungsventil testObj = new ZimmerMitHeizungsventil(testZimmer);
+        testObj.Temperaturvorgabe = 25;
+        testObj.PersonenImZimmer = true;
+        
+        testObj.VerarbeiteWetterdaten(wetterdaten);
         Assert.IsTrue(testObj.HeizungsventilOffen);
-
+        
         testObj.Temperaturvorgabe = 20;
-        Console.SetOut(stringWriterClose);
+        
+        StringWriter stringWriter = new StringWriter();
+
+        Console.SetOut(stringWriter);
         testObj.VerarbeiteWetterdaten(wetterdaten);
         
-        Assert.AreEqual($"{testObj.Name}: Heizungsventil wird geschlossen.\nWetterdaten für {testObj.Name} verarbeitet: Temperaturvorgabe: {testObj.Temperaturvorgabe}°C, Personen im Zimmer: {(testObj.PersonenImZimmer ? "ja" : "nein")}.\n", stringWriterClose.ToString());
+        Assert.AreEqual($"{testObj.Name}: Heizungsventil wird geschlossen.\nWetterdaten für {testObj.Name} verarbeitet: Temperaturvorgabe: {testObj.Temperaturvorgabe}°C, Personen im Zimmer: {(testObj.PersonenImZimmer ? "ja" : "nein")}.\n", stringWriter.ToString());
     }
 }
