@@ -34,7 +34,7 @@ public class ZimmerMitJalousiesteuerungTest
     }
     
     [TestMethod]
-    public void TestVerarbeiteWetterdaten_AussentemperaturGroesserTeperaturvorgabeOhnePersonInZimmer_JalousieLassen()
+    public void TestVerarbeiteWetterdaten_AussentemperaturGroesserTeperaturvorgabeOhnePersonInZimmer_JalousieSchliessen()
     {
         Wetterdaten wetterdaten = new Wetterdaten();
         wetterdaten.Aussentemperatur = 25;
@@ -52,5 +52,50 @@ public class ZimmerMitJalousiesteuerungTest
         
         Assert.IsTrue(testObj.JalousieHeruntergefahren);
         Assert.AreEqual($"{testObj.Name}: Jalousie wird geschlossen.\nWetterdaten für {testObj.Name} verarbeitet: Temperaturvorgabe: {testObj.Temperaturvorgabe}°C, Personen im Zimmer: {(testObj.PersonenImZimmer ? "ja" : "nein")}.\n", stringWriter.ToString());
+    }
+    
+    [TestMethod]
+    public void TestVerarbeiteWetterdaten_AussentemperaturKleinerTeperaturvorgabeJalousieGeschlossen_JalousieOeffnen()
+    {
+        Wetterdaten wetterdaten = new Wetterdaten();
+        wetterdaten.Aussentemperatur = 23;
+        wetterdaten.Regen = false;
+        wetterdaten.Windgeschwindigkeit = 0;
+        
+        ZimmerMitJalousiesteuerung testObj = new ZimmerMitJalousiesteuerung(testZimmer);
+        testObj.PersonenImZimmer = false;
+        testObj.Temperaturvorgabe = 22;
+        testObj.VerarbeiteWetterdaten(wetterdaten);
+        Assert.IsTrue(testObj.JalousieHeruntergefahren);
+        testObj.Temperaturvorgabe = 24;
+        
+        StringWriter stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        
+        testObj.VerarbeiteWetterdaten(wetterdaten);
+        
+        Assert.IsFalse(testObj.JalousieHeruntergefahren);
+        Assert.AreEqual($"{testObj.Name}: Jalousie wird geöffnet.\nWetterdaten für {testObj.Name} verarbeitet: Temperaturvorgabe: {testObj.Temperaturvorgabe}°C, Personen im Zimmer: {(testObj.PersonenImZimmer ? "ja" : "nein")}.\n", stringWriter.ToString());
+    }
+    
+    [TestMethod]
+    public void TestVerarbeiteWetterdaten_AussentemperaturKleinerTeperaturvorgabeJalousieOffen_JalousieLassen()
+    {
+        Wetterdaten wetterdaten = new Wetterdaten();
+        wetterdaten.Aussentemperatur = 23;
+        wetterdaten.Regen = false;
+        wetterdaten.Windgeschwindigkeit = 0;
+        
+        ZimmerMitJalousiesteuerung testObj = new ZimmerMitJalousiesteuerung(testZimmer);
+        testObj.PersonenImZimmer = false;
+        testObj.Temperaturvorgabe = 24;
+        
+        StringWriter stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        
+        testObj.VerarbeiteWetterdaten(wetterdaten);
+        
+        Assert.IsFalse(testObj.JalousieHeruntergefahren);
+        Assert.AreEqual($"Wetterdaten für {testObj.Name} verarbeitet: Temperaturvorgabe: {testObj.Temperaturvorgabe}°C, Personen im Zimmer: {(testObj.PersonenImZimmer ? "ja" : "nein")}.\n", stringWriter.ToString());
     }
 }
