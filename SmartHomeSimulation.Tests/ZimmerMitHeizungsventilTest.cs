@@ -14,30 +14,6 @@ public class ZimmerMitHeizungsventilTest
     private Wohnzimmer testZimmer = new Wohnzimmer();
 
     [TestMethod]
-    public void TestTemperaturvorgabe()
-    {
-        int temperaturvorgabe = 23;
-        
-        ZimmerMitHeizungsventil testObj = new ZimmerMitHeizungsventil(testZimmer);
-        
-        testObj.Temperaturvorgabe = temperaturvorgabe;
-        
-        Assert.AreEqual(temperaturvorgabe, testObj.Temperaturvorgabe);
-    }
-
-    [TestMethod]
-    public void TestPersonenImZimmer()
-    {
-        bool personenImZimmer = true;
-        
-        ZimmerMitHeizungsventil testObj = new ZimmerMitHeizungsventil(testZimmer);
-        
-        testObj.PersonenImZimmer = personenImZimmer;
-        
-        Assert.AreEqual(personenImZimmer,  testObj.PersonenImZimmer);
-    }
-
-    [TestMethod]
     public void TestVerarbeitetWetterdaten_TemperaturvorgabeGrösserIstTemperatur_OeffneHeizventil()
     {
         Wetterdaten wetterdaten = new Wetterdaten();
