@@ -10,8 +10,8 @@ namespace SmartHomeSimulation.Tests
         public void TestLueftungAusEsRegnet()
         {
             // Arrange
-            var wetterdaten = new Wetterdaten { Aussentemperatur = 20, Regen = true };
-            var zimmer = new Schlafzimmer
+            Wetterdaten wetterdaten = new Wetterdaten { Aussentemperatur = 20, Regen = true };
+            Schlafzimmer zimmer = new Schlafzimmer
             {
                 Temperaturvorgabe = 25,
                 PersonenImZimmer = true,
@@ -29,8 +29,8 @@ namespace SmartHomeSimulation.Tests
         public void TestLueftungAusKeinePersonImZimmer()
         {
             // Arrange
-            var wetterdaten = new Wetterdaten { Aussentemperatur = 20, Regen = false };
-            var zimmer = new Wohnzimmer
+            Wetterdaten wetterdaten = new Wetterdaten { Aussentemperatur = 20, Regen = false };
+            Wohnzimmer zimmer = new Wohnzimmer
             {
                 Temperaturvorgabe = 25,
                 PersonenImZimmer = false,
@@ -48,8 +48,8 @@ namespace SmartHomeSimulation.Tests
         public void TestLueftungAusAussentemperaturHoeher()
         {
             // Arrange
-            var wetterdaten = new Wetterdaten { Aussentemperatur = 25, Regen = false };
-            var zimmer = new BadWC
+            Wetterdaten wetterdaten = new Wetterdaten { Aussentemperatur = 25, Regen = false };
+            BadWC zimmer = new BadWC
             {
                 Temperaturvorgabe = 20,
                 PersonenImZimmer = true,
@@ -67,8 +67,8 @@ namespace SmartHomeSimulation.Tests
         public void TestLueftungEin()
         {
             // Arrange
-            var wetterdaten = new Wetterdaten { Aussentemperatur = 20, Regen = false };
-            var zimmer = new Schlafzimmer
+            Wetterdaten wetterdaten = new Wetterdaten { Aussentemperatur = 20, Regen = false };
+            Schlafzimmer zimmer = new Schlafzimmer
             {
                 Temperaturvorgabe = 25,
                 PersonenImZimmer = true,
