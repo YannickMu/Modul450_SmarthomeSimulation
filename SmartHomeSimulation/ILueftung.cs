@@ -9,5 +9,6 @@ namespace SmartHomeSimulation
     public interface ILueftung
     {
         void PruefeLueftung();
+        bool LueftungAn { get; }
     }
 }

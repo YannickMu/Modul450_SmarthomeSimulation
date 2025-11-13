@@ -2,7 +2,7 @@
 
 namespace M320_SmartHome {
     public class Schlafzimmer : Zimmer, ILueftung {
-        bool LueftungAn { get; set; }
+        public bool LueftungAn { get; private set; }
         public Wetterdaten Wetter { get; set; }
 
         public Schlafzimmer() : base("Schlafen") {
@@ -10,7 +10,7 @@ namespace M320_SmartHome {
 
         public void PruefeLueftung()
         {
-            LueftungAn = Temperaturvorgabe > Wetter.Aussentemperatur && !Wetter.Regen && !PersonenImZimmer;
+            LueftungAn = Temperaturvorgabe > Wetter.Aussentemperatur && !Wetter.Regen && PersonenImZimmer;
         }
     }
 }
