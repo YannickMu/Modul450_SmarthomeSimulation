@@ -7,7 +7,7 @@
 
         public override void VerarbeiteWetterdaten(Wetterdaten wetterdaten) {
             if(wetterdaten.Aussentemperatur > this.Zimmer.Temperaturvorgabe) {
-                // Markise schliessen
+                // Markise schliessen 
                 if(this.MarkiseOffen) {
                     if (wetterdaten.Regen) {
                         Console.WriteLine($"{this.Name}: Markise kann nicht geschlossen werden weils regnet.");
